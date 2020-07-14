@@ -1,0 +1,41 @@
+<div class="layout">
+  <mat-toolbar  class="toolbar" color="primary">
+    <mat-toolbar-row>
+      <span>Carsome Booking</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div >
+    <mat-card class="blog-card" >
+      <div>
+        <mat-form-field class="input-field" appearance="fill">
+          <mat-label>Full Name</mat-label>
+          <input [(ngModel)]='fullName' matInput placeholder="Please enter your full name">
+        </mat-form-field>
+        <mat-form-field class="input-field" appearance="fill">
+          <mat-label>Car Model</mat-label>
+          <input [(ngModel)]='carModel' matInput placeholder="Please enter your car model">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Select a date</mat-label>
+          <input readonly  [disabled]='(carModel==="" || fullName==="")' [(ngModel)]="slotDate"
+          matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker" [max]="maxDate" (dateChange)="onDateChange('change', $event)">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>  
+      </div>
+      <div *ngIf="!isEmptyObject(slots)">
+        <mat-label>Select a time slot</mat-label><br>
+        <mat-card (click)="SelectSlot(slot.key)" [ngClass]="(slot.value.count < maxBookingLimitPerhour)?(slot.value.selected)?'selected':'available':'notavailable'"
+          class="slot-card" *ngFor="let slot of slots | keyvalue">
+          <span class="time">{{slot.key}}</span>
+          <span class="count" [ngClass]="(slot.value.count < maxBookingLimitPerhour)?'green':'red'" >({{maxBookingLimitPerhour - slot.value.count}}) Available</span>
+        </mat-card>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="footer">
+        <button mat-raised-button color="primary" [disabled]='(selectedDate==="" || selectedTimeSlot==="")' (click)="BookSlot()">Book</button>
+      </div>
+    </mat-card>  
+  </div>  
+</div>
