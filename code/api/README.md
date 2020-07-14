@@ -1,5 +1,5 @@
 ## Purpose
-Create ana API with supports a web application of carsome booking<br>
+Create an API with supports a web application of carsome booking<br>
 
 ## Approach
 I have created my solution in Node Javascript. I made a session less api for creating time slots.<br>
